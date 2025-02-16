@@ -1,6 +1,6 @@
 use rust_code_organization::product::{Product, category::Category};
 use rust_code_organization::customer::Customer;
-use rust_code_organization::order::{Order, order_status::OrderStatus};
+use rust_code_organization::order::{Order, status::OrderStatus};
 
 fn main() {
     let p1 = Product::new(1, "Laptop".to_string(), 1000.0, Category::Electronics);
