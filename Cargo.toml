@@ -1,6 +1,10 @@
 [package]
-name = "rust_code_organization"
+name = "rust_code_organization" # Se già esiste, cambiarlo
 version = "0.1.0"
 edition = "2021"
+description = "Online store"
+keywords = ["rust", "code", "organization"]
+license = "MIT"
 
 [dependencies]
+array_tool = "1.0.3"

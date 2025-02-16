@@ -1,8 +1,11 @@
+//! # Libreria per gestire i prodotti.
+//! Questa libreria è per gestire i prodotti.
 pub mod product {
     // Rendiamo esportabili per altri file e moduli
 
     pub mod category {
-        #[derive(Debug)]
+        /// Il trait PartialEq è utilizzato per confrontare i prodotti, è richiesto dal crate array_tool
+        #[derive(Debug, PartialEq)]
         pub enum Category {
             Electronics,
             Clothing,
@@ -17,7 +20,8 @@ pub mod product {
     }
     use crate::product::category::Category; // Importazione della categoria, sarà disponibile per il resto del modulo
 
-    #[derive(Debug)]
+    /// Il trait PartialEq è utilizzato per confrontare i prodotti, è richiesto dal crate array_tool
+    #[derive(Debug, PartialEq)]
     pub struct Product {
         // Per le struct:
         pub id: u32, // Rendere pubblico ogni campo che useremo in altri moduli / file
@@ -27,7 +31,15 @@ pub mod product {
     }
 
     impl Product {
-        // ✅ Costruttore pubblico
+        /// # Esempio e Testing
+        /// ```
+        /// use rust_code_organization::product::category::Category;
+        /// use rust_code_organization::product::Product;
+        ///
+        /// let product = Product::new(1, "Product".to_string(), 10.0, Category::Electronics);
+        /// assert_eq!(product.get_id(), 1);
+        /// ```
+
         pub fn new(id: u32, name: String, price: f64, category: Category) -> Self {
             Product {
                 id,
@@ -161,19 +173,20 @@ pub mod customer {
             }
         }
 
-        fn get_id(&self) -> u64 {
+        pub fn get_id(&self) -> u64 {
+            // ✅ Ora è pubblico
             self.id
         }
 
-        fn get_name(&self) -> &str {
+        pub fn get_name(&self) -> &str {
             &self.name
         }
 
-        fn get_email(&self) -> &str {
+        pub fn get_email(&self) -> &str {
             &self.email
         }
 
-        fn get_phone(&self) -> &str {
+        pub fn get_phone(&self) -> &str {
             &self.phone
         }
     }
