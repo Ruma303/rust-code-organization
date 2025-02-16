@@ -1,4 +1,5 @@
-pub mod product { // Rendiamo esportabili per altri file e moduli
+pub mod product {
+    // Rendiamo esportabili per altri file e moduli
 
     pub mod category {
         #[derive(Debug)]
@@ -14,18 +15,19 @@ pub mod product { // Rendiamo esportabili per altri file e moduli
             Other,
         }
     }
+    use crate::product::category::Category; // Importazione della categoria, sarà disponibile per il resto del modulo
 
     #[derive(Debug)]
-    pub struct Product { // Per le struct:
+    pub struct Product {
+        // Per le struct:
         pub id: u32, // Rendere pubblico ogni campo che useremo in altri moduli / file
         pub name: String,
         pub price: f64,
         pub category: crate::product::category::Category, // Esempio con percorso assoluti
     }
 
-    use crate::product::category::Category; // Importazione della categoria, sarà disponibile per il resto del modulo
-
     impl Product {
+        // ✅ Costruttore pubblico
         pub fn new(id: u32, name: String, price: f64, category: Category) -> Self {
             Product {
                 id,
@@ -35,11 +37,12 @@ pub mod product { // Rendiamo esportabili per altri file e moduli
             }
         }
 
-        fn get_id(&self) -> u32 {
+        // ✅ Getter pubblici (solo lettura)
+        pub fn get_id(&self) -> u32 {
             self.id
         }
 
-        fn get_name(&self) -> &str {
+        pub fn get_name(&self) -> &str {
             &self.name
         }
 
@@ -47,12 +50,17 @@ pub mod product { // Rendiamo esportabili per altri file e moduli
             self.price
         }
 
-        fn set_price(&mut self, price: f64) {
-            self.price = price;
+        pub fn get_category(&self) -> &Category {
+            &self.category
         }
 
-        fn get_category(&self) -> &Category {
-            &self.category
+        // ✅ Setter privati (modificano lo stato)
+        fn set_id(&mut self, id: u32) {
+            self.id = id;
+        }
+
+        fn set_price(&mut self, price: f64) {
+            self.price = price;
         }
     }
 }
@@ -70,8 +78,8 @@ pub mod order {
         }
     }
 
-    use crate::customer::Customer;
     use self::order_status::OrderStatus; // Importazione da altro modulo pubblico esposto
+    use crate::customer::Customer;
     use crate::product::Product;
 
     #[derive(Debug)]
@@ -87,7 +95,14 @@ pub mod order {
     }
 
     impl Order {
-        pub fn new(customer: Customer, products: Vec<Product>, status: OrderStatus, quantity: u32, shipping_address: String, tracking_number: String) -> Self {
+        pub fn new(
+            customer: Customer,
+            products: Vec<Product>,
+            status: OrderStatus,
+            quantity: u32,
+            shipping_address: String,
+            tracking_number: String,
+        ) -> Self {
             let total_price = products.iter().map(|p| p.get_price()).sum();
             Order {
                 id: 0,
