@@ -15,6 +15,7 @@ pub mod product { // Rendiamo esportabili per altri file e moduli
         }
     }
 
+    #[derive(Debug)]
     pub struct Product { // Per le struct:
         pub id: u32, // Rendere pubblico ogni campo che useremo in altri moduli / file
         pub name: String,
@@ -73,6 +74,7 @@ pub mod order {
     use self::order_status::OrderStatus; // Importazione da altro modulo pubblico esposto
     use crate::product::Product;
 
+    #[derive(Debug)]
     pub struct Order {
         pub id: u64,
         pub products: Vec<Product>,
@@ -125,6 +127,8 @@ pub mod order {
 }
 
 pub mod customer {
+
+    #[derive(Debug)]
     pub struct Customer {
         pub id: u64,
         pub name: String,

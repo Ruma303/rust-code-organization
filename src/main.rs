@@ -11,5 +11,5 @@ fn main() {
     let order = Order::new(customer, vec![p1, p2], OrderStatus::Pending, 2, "Via Roma, 10".to_string(), "123456789".to_string());
 
     println!("Costo spedizione: {}", order.calculate_shipping_cost());
-    //println!("Acquirente: {}", order.get_order_customer());
+    println!("Acquirente: {:?}", order.get_order_customer());
 }
