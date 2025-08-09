@@ -1,6 +1,7 @@
-use rust_code_organization::product::{Product, category::Category};
+use rust_code_organization::product::{Product, Category};
 use rust_code_organization::customer::Customer;
 use rust_code_organization::order::{Order, status::OrderStatus};
+use rust_code_organization::modules::{public_module};
 
 fn main() {
     let p1 = Product::new(1, "Laptop".to_string(), 1000.0, Category::Electronics);
@@ -12,4 +13,6 @@ fn main() {
 
     println!("Costo spedizione: {}", order.calculate_shipping_cost());
     println!("Acquirente: {:?}", order.get_order_customer());
+
+    public_module::public_function();
 }
