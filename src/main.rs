@@ -1,15 +1,28 @@
-use rust_code_organization::product::{Product, category::Category};
-use rust_code_organization::customer::Customer;
-use rust_code_organization::order::{Order, order_status::OrderStatus};
-
 fn main() {
-    let p1 = Product::new(1, "Laptop".to_string(), 1000.0, Category::Electronics);
-    let p2 = Product::new(2, "Mouse".to_string(), 50.0, Category::Electronics);
+    const COSTANTE: i32 = 10;
 
-    let customer = Customer::new(1, "Mario Rossi".to_string(), "mario@example.com".to_string(), "123456789".to_string());
+    struct Local(i32);
 
-    let order = Order::new(customer, vec![p1, p2], OrderStatus::Pending, 2, "Via Roma, 10".to_string(), "123456789".to_string());
+    let x = {
+        let a = 2;
+        let b = 3;
+        a + b // valore restituito: 5
+    };
+    println!("Somma: {}", x);
 
-    println!("Costo spedizione: {}", order.calculate_shipping_cost());
-    println!("Acquirente: {:?}", order.get_order_customer());
+    impl Local {
+        fn stampa(&self) {
+            println!("Valore: {}", self.0);
+        }
+    }
+
+    fn somma(a: i32, b: i32) -> i32 {
+        a + b
+    }
+
+    let x = Local(somma(3, COSTANTE));
+    x.stampa();
+
+    let moltiplica = |x: i32| x * 2;
+    println!("Doppio: {}", moltiplica(5));
 }
