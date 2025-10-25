@@ -1,31 +1,12 @@
-//% Simple modules
-mod instruments {
-
-    //# Public function
-    pub fn guitar() {
-        println!("Playing guitar");
-    }
-
-    //# Private function
-    fn piano() {
-        println!("Playing piano");
-    }
-
-    //# Getter
-    pub fn get_piano() {
-        self::piano();
-    }
-
-    //% Nested modules
-    pub mod electric {
-        pub fn guitar() {
-            println!("Playing electric guitar");
-        }
-    }
-}
+mod utils;
 
 fn main() {
-    instruments::guitar();
-    instruments::get_piano();
-    instruments::electric::guitar();
+
+  //# Elementi importati dai sottomoduli di utils
+  utils::file1::funzione_da_file1();
+  utils::file2::funzione_da_file2();
+  utils::file3::modulo3::funzione_da_file3();
+
+  //# Funzione definita nel modulo utils
+  utils::saluta();
 }
