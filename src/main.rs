@@ -1,3 +1,6 @@
+use std::collections::HashMap as Map;
+use std::{self, io}; //, auto-import
+
 //% Simple modules
 mod instruments {
     //, Public function
@@ -23,18 +26,61 @@ mod instruments {
     }
 }
 
+// use: Generalmente ad inizio file
+use crate::my_module::function_a;
+
 fn main() {
     instruments::guitar();
     instruments::get_piano();
     instruments::electric::guitar();
 
-    crate::instruments::guitar(); // Uso di crate
+    crate::instruments::guitar();
 
-    use grandparent::parent::child::call_grandparent;
-    call_grandparent();
+    //, crate
+    crate::module_a::module_b::greet();
 
-    use my_module::function_b;
+    //, super
+    crate::grandparent::parent::parent_function();
+    crate::grandparent::grandparent_function();
+    crate::grandparent::parent::child::call_grandparent();
+
+    //, self
+    crate::my_module::function_a();
+    crate:: my_module::function_b();
+
+    //, use
+    use crate::my_module::function_a;
+    function_a();
+
+    // use: O comunque prima del suo utilizzo
+    use crate::my_module::function_b;
     function_b();
+    function_b();
+
+    //, Libreria standard
+    let mut map: Map<String, i32> = Map::new();
+    map.insert("key".to_string(), 42);
+    println!("{:?}", map);
+
+
+    //, auto-import
+    let mut input = String::new();
+    println!("Input: ");
+
+    let content: usize = io::stdin().read_line(&mut input).unwrap();
+    println!("{}", content);
+
+    println!("{}", std::env::var("HOME").unwrap_or_default());
+
+}
+
+//, crate (binario)
+mod module_a {
+    pub mod module_b {
+        pub fn greet() {
+            println!("Hello from module_b!");
+        }
+    }
 }
 
 //, super
@@ -49,10 +95,8 @@ mod grandparent {
         }
 
         pub mod child {
-            use super::super::grandparent_function; // Risale di 2 livelli
-
             pub fn call_grandparent() {
-                grandparent_function(); // Chiama direttamente grandparent_function
+                super::super::grandparent_function(); // Risale di 2 livelli
             }
         }
     }
@@ -65,11 +109,14 @@ mod my_module {
     }
 
     pub fn function_b() {
-        self::function_a(); // Usa self per accedere a function_a
+        self::function_a(); // Accede a function_a
     }
 }
 
-//% Modules accessibility
+
+
+
+//# Modules accessibility
 
 //* Generic modules
 pub mod public_module {
@@ -88,9 +135,7 @@ pub(crate) mod public_crate_module {
     }
 
     pub mod child {
-
         pub use crate::instruments::electric::guitar as electric_guitar;
-
         pub(in crate::public_crate_module) fn restricted_function() {
             println!("Accessible only in parent module");
             electric_guitar();
