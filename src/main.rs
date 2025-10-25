@@ -1,5 +1,6 @@
 //% Simple modules
 mod instruments {
+
     //# Public function
     pub fn guitar() {
         println!("Playing guitar");
